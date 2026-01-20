@@ -39,10 +39,7 @@ services:
       - key: NODE_VERSION
         value: 20.10.0
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: bienestar-server
-          property: url
+        sync: false
 
 databases:
   - name: bienestar-db
