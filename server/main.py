@@ -39,6 +39,7 @@ load_dotenv()
 # Create tables
 Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI(title="Bienestar Docente API")
 
 app.add_middleware(
