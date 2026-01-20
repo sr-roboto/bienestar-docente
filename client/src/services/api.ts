@@ -64,7 +64,7 @@ export const authService = {
         });
         return res.data;
     },
-    googleLoginUrl: `http://localhost:8000/auth/google`
+    googleLoginUrl: `https://bienestar-server.onrender.com/auth/google`
 };
 
 export const chatService = {
