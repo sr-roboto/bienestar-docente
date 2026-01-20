@@ -1,0 +1,47 @@
+services:
+  # Python Backend
+  - type: web
+    name: bienestar-server
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    rootDir: server
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bienestar-db
+          property: connectionString
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+
+  # React Frontend (Static Site)
+  - type: static
+    name: bienestar-client
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    rootDir: client
+    envVars:
+      - key: NODE_VERSION
+        value: 20.10.0
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: bienestar-server
+          property: url
+
+databases:
+  - name: bienestar-db
+    databaseName: bienestar
+    user: bienestar_user
+    plan: free # Render Free Tier PostgreSQL

@@ -2,7 +2,7 @@ import os
 import json
 import asyncio
 from typing import Any, Dict, List, Optional
-from datetime import timedelta
+from datetime import timedelta, datetime
 from fastapi import FastAPI, HTTPException, Depends, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, RedirectResponse
@@ -26,6 +26,7 @@ from auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES
 )
 from google_auth import google_sso
+from calendar_service import get_upcoming_events, create_event
 
 # MCP
 from mcp.server import Server
@@ -97,15 +98,22 @@ class MoodEntryCreate(BaseModel):
 
 class MoodEntryResponse(MoodEntryCreate):
     id: int
-    timestamp: str | None = None
+    timestamp: datetime | str | None = None
     user_id: int | None
     
     class Config:
         from_attributes = True
 
+class CalendarEventResponse(BaseModel):
+    id: str | None = None
+    summary: str | None = None
+    start: str | None = None
+    end: str | None = None
+    link: str | None = None
+
 # --- Auth Endpoints ---
 
-@app.post("/register", response_model=UserResponse)
+@app.post("/api/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(UserDB).filter((UserDB.username == user.username) | (UserDB.email == user.email)).first()
     if db_user:
@@ -122,7 +130,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-@app.post("/token", response_model=Token)
+@app.post("/api/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(UserDB).filter(UserDB.username == form_data.username).first()
     if not user:
@@ -142,11 +150,11 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@app.get("/users/me", response_model=UserResponse)
+@app.get("/api/users/me", response_model=UserResponse)
 async def read_users_me(current_user: UserDB = Depends(get_current_user)):
     return current_user
 
-# Google Auth
+# Google Auth (Keep at root for consistency with Google Console settings)
 @app.get("/auth/google")
 async def google_login():
     """Redirects user to Google Login"""
@@ -164,10 +172,9 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
     user = db.query(UserDB).filter(UserDB.email == user_google.email).first()
     
     if not user:
-        # Create user
         user = UserDB(
             email=user_google.email,
-            username=user_google.email.split("@")[0], # default username
+            username=user_google.email.split("@")[0],
             google_id=user_google.id,
             avatar_url=user_google.picture
         )
@@ -175,17 +182,19 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(user)
     else:
-        # Update info if needed
         if not user.google_id:
             user.google_id = user_google.id
         if not user.avatar_url:
             user.avatar_url = user_google.picture
         db.commit()
+    
+    # Store access tokens if available (Not directly provided by fast-sso verify object standardized, 
+    # but we might get them if we requested them. 
+    # For now, we assume user might need to re-auth or we use what we have. 
+    # Note: google-auth-oauthlib flow is better for offline access, but simple SSO is okay for now.)
 
-    # Create JWT
     access_token = create_access_token(data={"sub": user.username if user.username else user.email})
     
-    # Redirect to frontend with token
     frontend_url = os.getenv("FRONTEND_URL", "http://localhost")
     return RedirectResponse(url=f"{frontend_url}/login/callback?token={access_token}")
 
@@ -196,20 +205,109 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
 def read_root():
     return {"message": "Bienestar Docente API is running"}
 
+# Gemini Tools Definition
+def create_calendar_event_tool(summary: str, start_time: str, end_time: str):
+    """Schedules an event in the user's Google Calendar.
+    
+    Args:
+        summary: The title of the event.
+        start_time: ISO format start time (e.g. 2023-10-27T10:00:00).
+        end_time: ISO format end time.
+    """
+    # This function body is just for the Tool definition signature, 
+    # the actual logic is executed when the model asks for it.
+    pass
+
 @app.post("/api/chat")
 async def chat_endpoint(request: ChatRequest, current_user: UserDB = Depends(get_current_user)):
     if not api_key:
-        return {"response": f"Simulated AI: Hola {current_user.username}, recibí tu mensaje sobre '{request.context}'."}
+        return {"response": f"Simulated AI: Hola {current_user.username}."}
     
     try:
-        model = genai.GenerativeModel("gemini-flash-latest")
-        system_instruction = f"Contexto: {request.context}. Usuario: {current_user.username}. Eres un asistente de bienestar docente."
+        model = genai.GenerativeModel("gemini-flash-latest", tools=[create_calendar_event_tool])
+        chat = model.start_chat(enable_automatic_function_calling=True)
+        
+        # We need to manually handle the function call if we want to inject the USER context
+        # But 'enable_automatic_function_calling' tries to run it. 
+        # Since 'create_calendar_event_tool' is bound to the local scope here WITHOUT the user context,
+        # it won't work automatically if it needs 'current_user'.
+        # Solution: Define the function wrapper that HAS access to current_user.
+        
+        def create_event_wrapper(summary: str, start_time: str, end_time: str):
+            # Basic validation
+            return create_event(current_user, summary, start_time, end_time)
+
+        # Re-configure tools with the callable that has closure over current_user
+        # Gemini Python SDK 'tools' argument usually takes functions. 
+        # If we want automatic execution, we pass the function map.
+        
+        # Simplified approach: Disable auto-execution, handle manually?
+        # Or Just use context.
+        
+        # Better approach for this demo:
+        # We will use the model to generate the TOOL CALL, then we execute it manually.
+        
+        model = genai.GenerativeModel("gemini-flash-latest") # No tools init here to keep it simple first? 
+        # No, we need tools.
+        
+        tools_map = {
+            'create_calendar_event_tool': create_event_wrapper
+        }
+        
+        # We can't easily pass the wrapper to definitions if signatures don't match exactly or docstrings are missing.
+        # Let's use the manual turn-by-turn.
+        
+        model = genai.GenerativeModel("gemini-flash-latest", tools=[create_calendar_event_tool])
+        chat = model.start_chat()
+        
+        system_instruction = f"Contexto: {request.context}. Usuario: {current_user.username}. Eres un asistente útil. Tienes herramientas para agendar en Google Calendar. Si el usuario pide agendar, usa la herramienta. Hoy es {datetime.now().isoformat()}."
         full_prompt = f"{system_instruction}\nUser: {request.message}"
-        response = model.generate_content(full_prompt)
+        
+        response = chat.send_message(full_prompt)
+        
+        # Check for function call
+        if response.candidates[0].content.parts[0].function_call:
+            fc = response.candidates[0].content.parts[0].function_call
+            if fc.name == "create_calendar_event_tool":
+                args = fc.args
+                result = create_event(current_user, args['summary'], args['start_time'], args['end_time'])
+                
+                # Send result back
+                response = chat.send_message(
+                    genai.protos.Content(
+                        parts=[genai.protos.Part(
+                            function_response=genai.protos.FunctionResponse(
+                                name="create_calendar_event_tool",
+                                response={"result": f"Event created: {result}"}
+                            )
+                        )]
+                    )
+                )
+                return {"response": response.text}
+
         return {"response": response.text}
+
     except Exception as e:
         print(f"Error calling Gemini: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        # raise HTTPException(status_code=500, detail=str(e))
+        return {"response": f"Lo siento, hubo un error técnico: {str(e)}"}
+
+@app.get("/api/calendar", response_model=List[CalendarEventResponse])
+def get_calendar(db: Session = Depends(get_db), current_user: UserDB = Depends(get_current_user)):
+    events = get_upcoming_events(current_user)
+    # Transform to response model
+    res = []
+    for e in events:
+        start = e['start'].get('dateTime', e['start'].get('date'))
+        end = e['end'].get('dateTime', e['end'].get('date'))
+        res.append(CalendarEventResponse(
+            id=e['id'],
+            summary=e.get('summary', 'No Title'),
+            start=start,
+            end=end,
+            link=e.get('htmlLink')
+        ))
+    return res
 
 @app.get("/api/community", response_model=List[CommunityPostResponse])
 def get_community_posts(db: Session = Depends(get_db), current_user: UserDB = Depends(get_current_user)):
@@ -230,7 +328,6 @@ def create_post(post: CommunityPostCreate, db: Session = Depends(get_db), curren
 
 @app.get("/api/mood", response_model=List[MoodEntryResponse])
 def get_moods(db: Session = Depends(get_db), current_user: UserDB = Depends(get_current_user)):
-    # Only return OUR moods
     moods = db.query(MoodEntryDB).filter(MoodEntryDB.user_id == current_user.id).all()
     return list(map(format_mood, moods))
 
@@ -287,10 +384,8 @@ async def handle_call_tool(
     name: str, arguments: dict | None
 ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
     
-    # NOTE: MCP handles async contexts differently.
     from database import SessionLocal
     db = SessionLocal()
-    
     try:
         if name == "log_mood":
             mood = arguments.get("mood")
@@ -298,7 +393,7 @@ async def handle_call_tool(
             if not mood:
                 raise ValueError("Mood is required")
             
-            # Using generic admin/fallback user for MCP tools since auth context isn't passed yet
+            # Use generic admin for MCP
             user = db.query(UserDB).first()
             user_id = user.id if user else None
 

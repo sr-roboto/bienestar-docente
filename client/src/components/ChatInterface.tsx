@@ -17,6 +17,7 @@ interface ChatInterfaceProps {
     description: string;
     placeholder?: string;
     initialMessage?: string;
+    onMessageSent?: () => void;
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -24,7 +25,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     title,
     description,
     placeholder = "Escribe tu mensaje aquí...",
-    initialMessage
+    initialMessage,
+    onMessageSent
 }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
@@ -74,6 +76,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 timestamp: new Date()
             };
             setMessages(prev => [...prev, botMessage]);
+            if (onMessageSent) {
+                onMessageSent();
+            }
         } catch (error) {
             const errorMessage: Message = {
                 id: (Date.now() + 1).toString(),

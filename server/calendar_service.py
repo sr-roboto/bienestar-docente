@@ -29,3 +29,24 @@ def get_upcoming_events(user: UserDB, max_results=5):
                                           orderBy='startTime').execute()
     events = events_result.get('items', [])
     return events
+
+def create_event(user: UserDB, summary: str, start_time: str, end_time: str, description: str = None):
+    service = get_calendar_service(user)
+    if not service:
+        return None
+
+    event = {
+        'summary': summary,
+        'description': description,
+        'start': {
+            'dateTime': start_time, # ISO format
+            'timeZone': 'UTC',
+        },
+        'end': {
+            'dateTime': end_time,
+            'timeZone': 'UTC',
+        },
+    }
+
+    event = service.events().insert(calendarId='primary', body=event).execute()
+    return event.get('htmlLink')

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:8000';
-const API_URL = `${API_BASE}/api`;
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export const api = axios.create({
     baseURL: API_URL,
@@ -50,21 +49,21 @@ export const authService = {
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
-        const response = await axios.post(`${API_BASE}/token`, formData);
+        const response = await axios.post(`${API_URL}/token`, formData);
         return response.data; // { access_token, token_type }
     },
     register: async (username: string, email: string, password: string) => {
-        const response = await axios.post(`${API_BASE}/register`, { username, email, password });
+        const response = await axios.post(`${API_URL}/register`, { username, email, password });
         return response.data;
     },
     getMe: async () => {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`${API_BASE}/users/me`, {
+        const res = await axios.get(`${API_URL}/users/me`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         return res.data;
     },
-    googleLoginUrl: `${API_BASE}/auth/google`
+    googleLoginUrl: `http://localhost:8000/auth/google`
 };
 
 export const chatService = {
@@ -81,6 +80,21 @@ export const communityService = {
     },
     createPost: async (post: { content: string; author?: string }) => {
         const response = await api.post<CommunityPost>('/community', post);
+        return response.data;
+    }
+}
+
+export interface CalendarEvent {
+    id: string;
+    summary: string;
+    start: string;
+    end: string;
+    link?: string;
+}
+
+export const calendarService = {
+    getEvents: async () => {
+        const response = await api.get<CalendarEvent[]>('/calendar');
         return response.data;
     }
 }

@@ -10,6 +10,7 @@ import Pomodoro from './pages/Pomodoro';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import LoginCallback from './pages/LoginCallback';
+import Profile from './pages/Profile';
 
 // Simple protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -42,6 +43,7 @@ function App() {
           <Route path="mood" element={<Mood />} />
           <Route path="community" element={<Community />} />
           <Route path="pomodoro" element={<Pomodoro />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
