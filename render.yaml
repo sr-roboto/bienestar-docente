@@ -24,10 +24,9 @@ services:
       - key: SECRET_KEY
         generateValue: true
 
+staticSites:
   # React Frontend (Static Site)
-  - type: static
-    name: bienestar-client
-    env: static
+  - name: bienestar-client
     buildCommand: npm install && npm run build
     publishDir: dist
     rootDir: client
