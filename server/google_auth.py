@@ -1,14 +1,6 @@
 import os
 from fastapi_sso.sso.google import GoogleSSO
-from dotenv import load_dotenv
-
-load_dotenv()
-
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "your-client-id")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "your-client-secret")
-# Note: Redirect URI must match what is in Google Console. 
-# Usually http://localhost:8000/auth/google/callback for local dev
-GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "http://localhost:8000/auth/google/callback")
+from config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI
 
 google_sso = GoogleSSO(
     client_id=GOOGLE_CLIENT_ID,
