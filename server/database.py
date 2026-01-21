@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
+from config import DATABASE_URL
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost/bienestar_db")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 # Handle potential difference in docker vs local if needed, but standard URL format is fine.
 # If using asyncpg, URL should start with postgresql+asyncpg://

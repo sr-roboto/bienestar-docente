@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
@@ -68,6 +69,23 @@ app.include_router(mood_router)
 def read_root():
     """Root endpoint."""
     return {"message": "Bienestar Docente API"}
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    import traceback
+    error_msg = traceback.format_exc()
+    print(f"CRITICAL ERROR: {error_msg}")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal Server Error", "debug": str(exc)},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("origin", "*"),
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*"
+        }
+    )
 
 
 # --- MCP Server Implementation ---
