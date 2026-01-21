@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import { Home } from './components/Placeholders';
-import Crisis from './pages/Crisis';
 import Planning from './pages/Planning';
 import Mood from './pages/Mood';
 import Community from './pages/Community';

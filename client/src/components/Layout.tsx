@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
     Calendar,
@@ -25,7 +25,7 @@ const Layout: React.FC = () => {
         navigate('/login');
     };
 
-    const navItems = [
+    const navItems: { path: string; icon: React.ElementType; label: string; color?: string }[] = [
         { path: '/', icon: Home, label: 'Inicio' },
         { path: '/planning', icon: Calendar, label: 'Agenda' },
         { path: '/mood', icon: MessageCircle, label: 'Ánimo' },
