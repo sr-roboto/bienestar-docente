@@ -9,7 +9,8 @@ sqlalchemy
 asyncpg
 psycopg2-binary
 mcp
-passlib[bcrypt]
+passlib
+bcrypt==3.2.2
 python-jose[cryptography]
 python-multipart
 fastapi-sso
