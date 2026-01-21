@@ -31,11 +31,21 @@ app = FastAPI(title="Bienestar Docente API")
 # CORS settings
 from config import FRONTEND_URL
 
+def clean_url(url):
+    if not url: return None
+    return url.rstrip('/')
+
+cleaned_frontend_url = clean_url(FRONTEND_URL)
+print(f"DEBUG: Configured FRONTEND_URL: {FRONTEND_URL}")
+print(f"DEBUG: Cleaned FRONTEND_URL for CORS: {cleaned_frontend_url}")
+
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    FRONTEND_URL,
 ]
+
+if cleaned_frontend_url:
+    origins.append(cleaned_frontend_url)
 
 # CORS middleware
 app.add_middleware(
