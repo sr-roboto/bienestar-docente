@@ -30,7 +30,11 @@ def get_password_hash(password: str) -> str:
     password_bytes = password.encode('utf-8')
     if len(password_bytes) > 72:
         password_bytes = password_bytes[:72]
-    return pwd_context.hash(password_bytes.decode('utf-8', errors='ignore'))
+    # Passlib's bcrypt handles bytes input directly if configured, but let's be safe and decode
+    # However, decoding a truncated utf-8 byte string might fail if we cut a character in half
+    # So we use 'ignore' errors
+    valid_string = password_bytes.decode('utf-8', errors='ignore')
+    return pwd_context.hash(valid_string)
 
 
 def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
