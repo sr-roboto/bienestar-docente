@@ -50,13 +50,18 @@ async def chat_endpoint(request: ChatRequest, current_user: UserDB = Depends(get
                 args = fc.args
                 result = create_event(current_user, args['summary'], args['start_time'], args['end_time'])
                 
+                if result:
+                    tool_response = {"result": f"Event created: {result}"}
+                else:
+                    tool_response = {"result": "Error: Could not create event. User is not logged in with Google or has not granted calendar permissions."}
+
                 # Send result back
                 response = chat.send_message(
                     genai.protos.Content(
                         parts=[genai.protos.Part(
                             function_response=genai.protos.FunctionResponse(
                                 name="create_calendar_event_tool",
-                                response={"result": f"Event created: {result}"}
+                                response=tool_response
                             )
                         )]
                     )
