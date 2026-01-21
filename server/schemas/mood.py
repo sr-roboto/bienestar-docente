@@ -10,6 +10,8 @@ class MoodEntryCreate(BaseModel):
 
 class MoodEntryResponse(BaseModel):
     id: int
+    mood: str
+    note: Optional[str] = None
     timestamp: Optional[datetime | str] = None
     user_id: Optional[int]
 
