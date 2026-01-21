@@ -9,8 +9,7 @@ if GOOGLE_API_KEY:
 
 def get_gemini_model():
     """Get the configured Gemini model."""
-    return genai.GenerativeModel("gemini-1.5-flash")
-
+    model = genai.GenerativeModel("gemini-flash-latest")
 
 async def generate_ai_response(message: str, context: str = "general", tools: list = None) -> str:
     """Generate an AI response using Gemini."""
@@ -18,7 +17,7 @@ async def generate_ai_response(message: str, context: str = "general", tools: li
     
     if tools:
         # Enable function calling
-        model = genai.GenerativeModel("gemini-1.5-flash", tools=tools)
+        model = genai.GenerativeModel("gemini-flash-latest", tools=tools)
     
     # Create chat session
     chat = model.start_chat(history=[])
