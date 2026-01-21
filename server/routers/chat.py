@@ -71,6 +71,11 @@ async def chat_endpoint(request: ChatRequest, current_user: UserDB = Depends(get
         return {"response": response.text}
 
     except Exception as e:
+        error_str = str(e)
+        if "429" in error_str or "quota" in error_str.lower():
+            print(f"Gemini Rate Limit Exceeded: {e}")
+            return {"response": "⏳ El sistema de IA está saturado momentáneamente (límite de cuota gratuito). Por favor, intenta de nuevo en unos segundos."}
+        
         print(f"Error calling Gemini: {e}")
         return {"response": f"Lo siento, hubo un error técnico: {str(e)}"}
 
