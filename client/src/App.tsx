@@ -38,7 +38,6 @@ function App() {
           </ProtectedRoute>
         }>
           <Route index element={<Home />} />
-          <Route path="crisis" element={<Crisis />} />
           <Route path="planning" element={<Planning />} />
           <Route path="mood" element={<Mood />} />
           <Route path="community" element={<Community />} />

@@ -94,10 +94,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     };
 
     return (
-        <div className="flex flex-col h-[calc(100vh-12rem)] max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-            <div className="p-4 border-b border-indigo-100 bg-indigo-50/50">
-                <h2 className="text-xl font-bold text-indigo-900">{title}</h2>
-                <p className="text-sm text-indigo-600">{description}</p>
+        <div className="flex flex-col h-full bg-white overflow-hidden">
+            <div className="p-4 border-b border-indigo-100 bg-indigo-50/50 flex-shrink-0">
+                <h2 className="text-lg font-bold text-indigo-900">{title}</h2>
+                <p className="text-xs text-indigo-600">{description}</p>
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
