@@ -35,7 +35,7 @@ async def chat_endpoint(request: ChatRequest, current_user: UserDB = Depends(get
         return {"response": f"Simulated AI: Hola {current_user.username}."}
     
     try:
-        model = genai.GenerativeModel("gemini-2.0-flash-lite", tools=[create_calendar_event_tool])
+        model = genai.GenerativeModel("gemini-2.5-flash", tools=[create_calendar_event_tool])
         chat = model.start_chat()
         
         system_instruction = f"Contexto: {request.context}. Usuario: {current_user.username}. Eres un asistente útil. Tienes herramientas para agendar en Google Calendar. Si el usuario pide agendar, usa la herramienta. Hoy es {datetime.now().isoformat()}."
