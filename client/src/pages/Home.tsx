@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote } from 'lucide-react';
+import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart } from 'lucide-react';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -42,6 +42,15 @@ const Home: React.FC = () => {
             lightColor: 'bg-teal-50',
             textColor: 'text-teal-600',
         },
+        {
+            title: 'Contenido Inclusivo',
+            description: 'Aplicaciones y recursos de Proyecto DANE.',
+            icon: Heart,
+            path: 'https://www.proyectodane.org/aplicaciones/',
+            color: 'bg-red-500',
+            lightColor: 'bg-red-50',
+            textColor: 'text-red-600',
+        },
     ];
 
     const currentTime = new Date();
@@ -79,7 +88,13 @@ const Home: React.FC = () => {
                 {features.map((feature, index) => (
                     <div
                         key={index}
-                        onClick={() => navigate(feature.path)}
+                        onClick={() => {
+                            if (feature.path.startsWith('http')) {
+                                window.open(feature.path, '_blank', 'noopener,noreferrer');
+                            } else {
+                                navigate(feature.path);
+                            }
+                        }}
                         className="group bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col"
                     >
                         <div className="flex items-start justify-between mb-4">
