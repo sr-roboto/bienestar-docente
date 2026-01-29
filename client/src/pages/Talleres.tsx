@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, MessageCircle, Video } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import mayraVideo from '../assets/mayra_bienestar.mp4';
 
 const Talleres: React.FC = () => {
     const navigate = useNavigate();
@@ -35,18 +36,10 @@ const Talleres: React.FC = () => {
 
                     {/* Video Container */}
                     <div className="relative aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-lg mb-10 group">
-                        {/* Placeholder for video - if the user provides the file later, simple src update needed */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
-                             <Video size={64} className="mb-4 opacity-50" />
-                             <p>El video de presentación estará disponible pronto</p>
-                        </div>
-                        {/* 
-                           If video file existed:
-                           <video controls className="w-full h-full object-cover">
-                               <source src="/path/to/video.mp4" type="video/mp4" />
-                               Tu navegador no soporta el elemento de video.
-                           </video>
-                        */}
+                        <video controls className="w-full h-full object-cover">
+                            <source src={mayraVideo} type="video/mp4" />
+                            Tu navegador no soporta el elemento de video.
+                        </video>
                     </div>
 
                     <div className="bg-slate-50 rounded-xl p-8 text-center">
