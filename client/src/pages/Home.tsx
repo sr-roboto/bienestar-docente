@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart } from 'lucide-react';
+import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video } from 'lucide-react';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -50,6 +50,15 @@ const Home: React.FC = () => {
             color: 'bg-red-500',
             lightColor: 'bg-red-50',
             textColor: 'text-red-600',
+        },
+        {
+            title: 'Talleres con Mayra Cerrotta',
+            description: 'Talleres exclusivos para tu bienestar.',
+            icon: Video,
+            path: '/talleres',
+            color: 'bg-orange-500',
+            lightColor: 'bg-orange-50',
+            textColor: 'text-orange-600',
         },
     ];
 
