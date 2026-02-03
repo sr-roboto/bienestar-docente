@@ -1,9 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart } from 'lucide-react';
+import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video, Gamepad2 } from 'lucide-react';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
+
+    const [quote, setQuote] = React.useState({
+        text: "La enseñanza que deja huella no es la que se hace de cabeza a cabeza, sino de corazón a corazón.",
+        author: "Howard G. Hendricks"
+    });
+
+    const quotes = [
+        { text: "La enseñanza que deja huella no es la que se hace de cabeza a cabeza, sino de corazón a corazón.", author: "Howard G. Hendricks" },
+        { text: "Educar la mente sin educar el corazón no es educar en absoluto.", author: "Aristóteles" },
+        { text: "El arte de enseñar es el arte de asistir al descubrimiento.", author: "Mark Van Doren" },
+        { text: "Lo que se dé a los niños, los niños darán a la sociedad.", author: "Karl A. Menninger" },
+        { text: "Un maestro afecta la eternidad; nunca sabe dónde termina su influencia.", author: "Henry Adams" },
+        { text: "La educación es el arma más poderosa que puedes usar para cambiar el mundo.", author: "Nelson Mandela" },
+    ];
+
+    const changeQuote = () => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        setQuote(quotes[randomIndex]);
+    };
 
     const features = [
         {
@@ -23,6 +42,24 @@ const Home: React.FC = () => {
             color: 'bg-purple-500',
             lightColor: 'bg-purple-50',
             textColor: 'text-purple-600',
+        },
+        {
+            title: 'Video-Talleres',
+            description: 'Clases grabadas para tu bienestar y desarrollo.',
+            icon: Video,
+            path: '/workshops',
+            color: 'bg-blue-500',
+            lightColor: 'bg-blue-50',
+            textColor: 'text-blue-600',
+        },
+        {
+            title: 'Zona de Juegos',
+            description: 'Diviértete y descubre más sobre tus emociones.',
+            icon: Gamepad2,
+            path: '/games',
+            color: 'bg-orange-500',
+            lightColor: 'bg-orange-50',
+            textColor: 'text-orange-600',
         },
         {
             title: 'Comunidad',
@@ -70,17 +107,23 @@ const Home: React.FC = () => {
             </div>
 
             {/* Daily Quote/Tip Section */}
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex items-start gap-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row items-start gap-4 transition-all hover:shadow-md">
                 <div className="bg-amber-100 p-3 rounded-full text-amber-600 flex-shrink-0">
                     <Quote size={24} fill="currentColor" />
                 </div>
-                <div>
+                <div className="flex-grow">
                     <h3 className="font-semibold text-slate-800 mb-1">Frase del día</h3>
-                    <p className="text-slate-600 italic">
-                        "La enseñanza que deja huella no es la que se hace de cabeza a cabeza, sino de corazón a corazón."
+                    <p className="text-slate-600 italic transition-opacity duration-300">
+                        "{quote.text}"
                     </p>
-                    <p className="text-slate-400 text-sm mt-2">— Howard G. Hendricks</p>
+                    <p className="text-slate-400 text-sm mt-2">— {quote.author}</p>
                 </div>
+                <button
+                    onClick={changeQuote}
+                    className="mt-2 md:mt-0 px-4 py-2 text-sm bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors font-medium"
+                >
+                    Nueva Frase
+                </button>
             </div>
 
             {/* Quick Actions Grid */}

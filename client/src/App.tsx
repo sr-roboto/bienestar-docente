@@ -12,6 +12,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import LoginCallback from './pages/LoginCallback';
 import Profile from './pages/Profile';
+import VideoTalleres from './pages/VideoTalleres';
+import Juegos from './pages/Juegos';
 
 // Simple protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -44,6 +46,8 @@ function App() {
           <Route path="community" element={<Community />} />
           <Route path="pomodoro" element={<Pomodoro />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="workshops" element={<VideoTalleres />} />
+          <Route path="games" element={<Juegos />} />
         </Route>
       </Routes>
     </BrowserRouter>
