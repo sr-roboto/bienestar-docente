@@ -10,7 +10,8 @@ import {
     UserCircle,
     X,
     Maximize2,
-    Minimize2
+    Minimize2,
+    Video
 } from 'lucide-react';
 import ChatInterface from './ChatInterface';
 
@@ -31,6 +32,7 @@ const Layout: React.FC = () => {
         { path: '/mood', icon: MessageCircle, label: 'Ánimo' },
         { path: '/community', icon: Users, label: 'Comunidad' },
         { path: '/pomodoro', icon: Timer, label: 'Recreo' },
+        { path: '/talleres', icon: Video, label: 'Talleres' },
     ];
 
     // Determine chat context based on current route
