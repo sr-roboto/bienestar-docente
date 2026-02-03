@@ -12,12 +12,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import LoginCallback from './pages/LoginCallback';
 import Profile from './pages/Profile';
-<<<<<<< HEAD
 import VideoTalleres from './pages/VideoTalleres';
 import Juegos from './pages/Juegos';
-=======
 import Talleres from './pages/Talleres';
->>>>>>> ac74af16327455f8fc1f05bdeb962202dedf9122
 
 // Simple protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -50,12 +47,9 @@ function App() {
           <Route path="community" element={<Community />} />
           <Route path="pomodoro" element={<Pomodoro />} />
           <Route path="profile" element={<Profile />} />
-<<<<<<< HEAD
           <Route path="workshops" element={<VideoTalleres />} />
           <Route path="games" element={<Juegos />} />
-=======
           <Route path="talleres" element={<Talleres />} />
->>>>>>> ac74af16327455f8fc1f05bdeb962202dedf9122
         </Route>
       </Routes>
     </BrowserRouter>

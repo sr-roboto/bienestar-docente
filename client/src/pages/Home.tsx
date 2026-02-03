@@ -1,10 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video, Gamepad2 } from 'lucide-react';
-=======
-import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video } from 'lucide-react';
->>>>>>> ac74af16327455f8fc1f05bdeb962202dedf9122
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -66,6 +62,15 @@ const Home: React.FC = () => {
             textColor: 'text-orange-600',
         },
         {
+            title: 'Talleres con Mayra Cerrotta',
+            description: 'Talleres exclusivos para tu bienestar.',
+            icon: Video,
+            path: '/talleres',
+            color: 'bg-orange-500',
+            lightColor: 'bg-orange-50',
+            textColor: 'text-orange-600',
+        },
+        {
             title: 'Comunidad',
             description: 'Conecta con otros docentes y comparte experiencias.',
             icon: Users,
@@ -91,15 +96,6 @@ const Home: React.FC = () => {
             color: 'bg-red-500',
             lightColor: 'bg-red-50',
             textColor: 'text-red-600',
-        },
-        {
-            title: 'Talleres con Mayra Cerrotta',
-            description: 'Talleres exclusivos para tu bienestar.',
-            icon: Video,
-            path: '/talleres',
-            color: 'bg-orange-500',
-            lightColor: 'bg-orange-50',
-            textColor: 'text-orange-600',
         },
     ];
 
