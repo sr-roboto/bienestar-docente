@@ -13,59 +13,59 @@ interface Workshop {
 const workshops: Workshop[] = [
     {
         id: 1,
-        title: "Cuando la ansiedad se vuelve angustia",
-        duration: "10 min",
-        description: "Gabriel Rolón explica la diferencia entre ansiedad y angustia, y cómo identificarlas.",
-        videoId: "N66Gk_031pE"
+        title: "El motor de la vida: Deseo y Soledad",
+        duration: "15 min",
+        description: "Una charla inspiradora sobre lo que nos impulsa a seguir adelante.",
+        videoId: "jW0i9J4L11I"
     },
     {
         id: 2,
-        title: "Ansiedad y ataques de pánico",
-        duration: "15 min",
-        description: "Herramientas para comprender y manejar los momentos de crisis y ansiedad intensa.",
-        videoId: "S8L4X_c_72o"
+        title: "Soltar no es voluntario",
+        duration: "18 min",
+        description: "Gabriel Rolón reflexiona sobre la melancolía y la dificultad de dejar ir el pasado.",
+        videoId: "F0pX5_nI-vQ"
     },
     {
         id: 3,
-        title: "¿Qué es la ansiedad?",
-        duration: "12 min",
-        description: "Una mirada profunda sobre el origen de la ansiedad y su función en nuestra psiquis.",
-        videoId: "Qf6V9aWk7fA"
+        title: "Miedo a la soledad",
+        duration: "20 min",
+        description: "Análisis sobre el miedo a estar solos y cómo construir una soledad fértil.",
+        videoId: "wX-yXz-z1qA"
     },
     {
         id: 4,
-        title: "¿Cómo manejar la ansiedad?",
-        duration: "14 min",
-        description: "Consejos prácticos y reflexiones para convivir con la ansiedad de manera más saludable.",
-        videoId: "z4p7v_I_0mI"
+        title: "¿Existe la felicidad?",
+        duration: "25 min",
+        description: "Debate sobre la felicidad, el goce y el sentido de la vida.",
+        videoId: "2tX2-3eP8J0"
     },
     {
         id: 5,
-        title: "Sobre salud mental y bienestar",
-        duration: "20 min",
-        description: "Reflexiones generales sobre el cuidado de nuestra salud mental en la vida diaria.",
-        videoId: "b4wS9J2_7I0"
+        title: "Recuperar el respeto propio",
+        duration: "12 min",
+        description: "Actitudes fundamentales para fortalecer la autoestima y hacerse respetar.",
+        videoId: "Q7w4nS00iP0"
     },
     {
         id: 6,
-        title: "La palabra plena",
-        duration: "18 min",
-        description: "La importancia de la palabra y cómo esta nos define y compromete.",
-        videoId: "5_Woqz5mjWk"
+        title: "Uno no se enamora de cualquiera",
+        duration: "14 min",
+        description: "Sobre las elecciones amorosas y cómo nuestra historia define a quién amamos.",
+        videoId: "3i6G_W3Z8y0"
     },
     {
         id: 7,
-        title: "Encontrar la vocación",
+        title: "El lado B del amor",
         duration: "22 min",
-        description: "Cómo simbolizar la ausencia y encontrar aquello que realmente nos apasiona.",
-        videoId: "SNwLK1N0vSs"
+        description: "Encuentros y desencuentros en las relaciones de pareja.",
+        videoId: "sE0iH7693nE"
     },
     {
         id: 8,
-        title: "¿Qué me gustaría hacer a mí?",
-        duration: "15 min",
-        description: "Reflexiones sobre el deseo propio y la elección personal en la vida y el trabajo.",
-        videoId: "mED4XKYmeqL"
+        title: "Elegir a quién cuidar",
+        duration: "16 min",
+        description: "La importancia de la reciprocidad y los límites en los vínculos afectivos.",
+        videoId: "C7d4aG1hJ4U"
     }
 ];
 
