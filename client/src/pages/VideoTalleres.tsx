@@ -91,6 +91,15 @@ const VideoTalleres: React.FC = () => {
                             <div>
                                 <h3 className="text-xl font-bold text-slate-900">{activeVideo.title}</h3>
                                 <p className="text-slate-600 mt-1">{activeVideo.description}</p>
+                                <a
+                                    href={`https://www.youtube.com/watch?v=${activeVideo.videoId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 mt-3 text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                                >
+                                    <span>Ver directamente en YouTube</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                </a>
                             </div>
                             <button
                                 onClick={() => setActiveVideo(null)}
