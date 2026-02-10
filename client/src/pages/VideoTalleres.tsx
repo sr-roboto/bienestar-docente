@@ -27,20 +27,6 @@ const workshops: Workshop[] = [
     },
     {
         id: 3,
-        title: "El hombre, el deseo y la palabra (TEDx)",
-        duration: "18 min",
-        description: "Charla TEDx sobre la condición humana y la importancia de la palabra.",
-        videoId: "6Z63rwy0zlO"
-    },
-    {
-        id: 4,
-        title: "Aprender a estar solo",
-        duration: "15 min",
-        description: "Reflexiones sobre la soledad y cómo transformarla en un espacio de crecimiento.",
-        videoId: "LqN_y5S_z5M"
-    },
-    {
-        id: 5,
         title: "¿Existe la felicidad?",
         duration: "25 min",
         description: "Debate profundo sobre la felicidad, el goce y el sentido de la vida.",
