@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Brain, Sparkles, X, RotateCcw, Gamepad2, ExternalLink, Minimize2, Maximize2 } from 'lucide-react';
+import { ArrowLeft, Brain, Sparkles, X, ExternalLink, Minimize2, Maximize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Game Data Types
