@@ -16,14 +16,14 @@ const workshops: Workshop[] = [
         title: "El motor de la vida (Aprendemos Juntos)",
         duration: "55 min",
         description: "Gabriel Rolón reflexiona sobre el deseo, la falta y la soledad como motores de la vida.",
-        videoId: "jW0i9J4L11I"
+        videoId: "bvkczCmZwr8"
     },
     {
         id: 2,
-        title: "Historias de Diván: La Infidelidad",
-        duration: "35 min",
-        description: "Episodio completo de la serie. Un caso profundo sobre la confianza y el dolor.",
-        videoId: "VsFzYcmNVzE"
+        title: "El Dolor y el Duelo",
+        duration: "15 min",
+        description: "Cómo transitar los momentos más difíciles de la vida y la importancia del duelo.",
+        videoId: "SzrYGo8lnzE"
     },
     {
         id: 3,
@@ -34,10 +34,10 @@ const workshops: Workshop[] = [
     },
     {
         id: 4,
-        title: "El Dolor y el Duelo",
-        duration: "15 min",
-        description: "Cómo transitar los momentos más difíciles de la vida.",
-        videoId: "SzrYGo8lnzE"
+        title: "Aprender a pararse ante la vida",
+        duration: "12 min",
+        description: "Charlas inspiradoras para enfrentar la adversidad.",
+        videoId: "roh6Efj87oQ"
     }
 ];
 
