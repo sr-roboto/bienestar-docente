@@ -13,24 +13,24 @@ interface Workshop {
 const workshops: Workshop[] = [
     {
         id: 1,
-        title: "El hombre, el deseo y la palabra (TEDx)",
-        duration: "18 min",
-        description: "Charla TEDx sobre la condición humana, el dolor y la importancia de la palabra.",
-        videoId: "6Z63rwy0zlO"
+        title: "El motor de la vida (Aprendemos Juntos)",
+        duration: "55 min",
+        description: "Gabriel Rolón reflexiona sobre el deseo, la falta y la soledad como motores de la vida.",
+        videoId: "jW0i9J4L11I"
     },
     {
         id: 2,
         title: "Historias de Diván: La Infidelidad",
         duration: "35 min",
-        description: "Episodio completo de la aclamada serie basada en los casos reales de Gabriel Rolón.",
+        description: "Episodio completo de la serie. Un caso profundo sobre la confianza y el dolor.",
         videoId: "VsFzYcmNVzE"
     },
     {
         id: 3,
-        title: "¿Existe la felicidad?",
-        duration: "25 min",
-        description: "Debate profundo sobre la felicidad, el goce y el sentido de la vida.",
-        videoId: "2tX2-3eP8J0"
+        title: "El hombre, el deseo y la palabra (TEDx)",
+        duration: "18 min",
+        description: "Charla TEDx sobre la condición humana y la importancia de la palabra.",
+        videoId: "6Z63rwy0zlO"
     },
     {
         id: 4,
@@ -41,10 +41,10 @@ const workshops: Workshop[] = [
     },
     {
         id: 5,
-        title: "El duelo y sus etapas",
-        duration: "12 min",
-        description: "Explicación clara sobre los momentos del duelo y cómo transitar el dolor.",
-        videoId: "0k5L4jN_o2g"
+        title: "¿Existe la felicidad?",
+        duration: "25 min",
+        description: "Debate profundo sobre la felicidad, el goce y el sentido de la vida.",
+        videoId: "2tX2-3eP8J0"
     }
 ];
 
