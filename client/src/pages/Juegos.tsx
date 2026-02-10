@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Brain, Sparkles, X, RotateCcw, Gamepad2, Dices, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Brain, Sparkles, X, RotateCcw, Gamepad2, ExternalLink, Minimize2, Maximize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Game Data Types
@@ -25,6 +25,8 @@ type QuizGame = BaseGame & {
 type ExternalGame = BaseGame & {
     type: 'external';
     url: string;
+    secondaryUrl?: string; // For the dice app
+    secondaryTitle?: string;
 };
 
 type Game = QuizGame | ExternalGame;
@@ -33,20 +35,13 @@ const GAMES: Game[] = [
     {
         id: 'encuentro',
         title: 'El Gran Encuentro',
-        description: 'Juego de cartas para fomentar el diálogo y el conocimiento personal.',
+        description: 'Juego de cartas para fomentar el diálogo. Incluye dados virtuales.',
         icon: Gamepad2,
         color: 'bg-violet-500',
         type: 'external',
-        url: 'https://elgranencuentro.netlify.app/'
-    },
-    {
-        id: 'dados',
-        title: 'Dados 3D',
-        description: 'Dados virtuales para dinámicas de grupo y juegos de azar.',
-        icon: Dices,
-        color: 'bg-emerald-500',
-        type: 'external',
-        url: 'https://dados3d.netlify.app/'
+        url: 'https://elgranencuentro.netlify.app/',
+        secondaryUrl: 'https://dados3d.netlify.app/',
+        secondaryTitle: 'Dados Virtuales'
     },
     {
         id: 'emociones',
@@ -77,36 +72,6 @@ const GAMES: Game[] = [
                 correctIndex: 0
             }
         ]
-    },
-    {
-        id: 'poder',
-        title: 'Cuánto Sabés de Tu Poder Personal',
-        description: 'Descubre herramientas para fortalecer tu autoestima y liderazgo.',
-        icon: Sparkles,
-        color: 'bg-amber-500',
-        type: 'quiz',
-        questions: [
-            {
-                text: "¿Qué es el locus de control interno?",
-                options: ["Creer que todo es suerte", "Creer que tenemos control sobre nuestras acciones y resultados", "Controlar a los demás", "Dejar que otros decidan"],
-                correctIndex: 1
-            },
-            {
-                text: "La asertividad es:",
-                options: ["Decir siempre que sí", "Imponer mi opinión", "Expresar mis necesidades respetando las de otros", "No decir nada para evitar conflictos"],
-                correctIndex: 2
-            },
-            {
-                text: "¿Cómo se construye la autoconfianza?",
-                options: ["Con pequeños logros y cumpliendo promesas a uno mismo", "Esperando que otros nos elogien", "Siendo perfecto", "No fallando nunca"],
-                correctIndex: 0
-            },
-            {
-                text: "El autodiálogo positivo ayuda a:",
-                options: ["Engañarnos", "Reducir el estrés y mejorar el rendimiento", "Ser vanidoso", "Nada en particular"],
-                correctIndex: 1
-            }
-        ]
     }
 ];
 
@@ -117,6 +82,9 @@ const Juegos: React.FC = () => {
     const [score, setScore] = useState(0);
     const [showResults, setShowResults] = useState(false);
 
+    // State for the secondary floating window
+    const [isSecondaryOpen, setIsSecondaryOpen] = useState(true);
+
     const startGame = (game: Game) => {
         setSelectedGame(game);
         if (game.type === 'quiz') {
@@ -124,6 +92,7 @@ const Juegos: React.FC = () => {
             setScore(0);
             setShowResults(false);
         }
+        setIsSecondaryOpen(true);
     };
 
     const handleAnswer = (optionIdx: number) => {
@@ -182,9 +151,9 @@ const Juegos: React.FC = () => {
                             <div className="mt-auto pt-4 border-t border-slate-50 flex justify-between items-center text-sm font-medium">
                                 <span className={`
                                     px-2 py-1 rounded-md 
-                                    ${game.type === 'external' ? 'bg-indigo-50 text-indigo-700' : 'bg-rose-50 text-rose-700'}
+                                    ${game.type === 'external' ? 'bg-violet-50 text-violet-700' : 'bg-rose-50 text-rose-700'}
                                 `}>
-                                    {game.type === 'external' ? 'App Externa' : 'Quiz Interactivo'}
+                                    {game.type === 'external' ? 'Juego + Herramientas' : 'Quiz Interactivo'}
                                 </span>
                                 <div className="text-indigo-600 group-hover:translate-x-1 transition-transform inline-flex items-center">
                                     Jugar <ArrowLeft className="rotate-180 ml-1" size={16} />
@@ -200,8 +169,10 @@ const Juegos: React.FC = () => {
     // External Game View (Iframe)
     if (selectedGame.type === 'external') {
         return (
-            <div className="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-white w-full h-full max-w-6xl max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col relative animate-in zoom-in-95 duration-200">
+            <div className="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+                <div className="bg-white w-full h-full max-w-7xl max-h-[95vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col relative animate-in zoom-in-95 duration-200">
+
+                    {/* Header */}
                     <div className={`${selectedGame.color} p-4 flex items-center justify-between text-white shadow-md z-10`}>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -221,7 +192,10 @@ const Juegos: React.FC = () => {
                             <X size={24} />
                         </button>
                     </div>
-                    <div className="flex-grow bg-slate-100 relative">
+
+                    {/* Content Area */}
+                    <div className="flex-grow bg-slate-100 relative overflow-hidden">
+                        {/* Main Game Iframe */}
                         <iframe
                             src={selectedGame.url}
                             className="w-full h-full absolute inset-0"
@@ -229,6 +203,35 @@ const Juegos: React.FC = () => {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         />
+
+                        {/* Secondary Floating Widget (Dice) */}
+                        {selectedGame.secondaryUrl && (
+                            <div className={`
+                                absolute bottom-4 right-4 bg-white rounded-xl shadow-2xl border-2 border-slate-200 overflow-hidden transition-all duration-300
+                                ${isSecondaryOpen ? 'w-80 h-96' : 'w-48 h-12'}
+                            `}>
+                                <div
+                                    className="bg-slate-800 text-white p-2 px-3 flex items-center justify-between cursor-pointer hover:bg-slate-700 transition-colors"
+                                    onClick={() => setIsSecondaryOpen(!isSecondaryOpen)}
+                                >
+                                    <span className="font-bold text-sm flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                        {selectedGame.secondaryTitle || 'Herramientas'}
+                                    </span>
+                                    {isSecondaryOpen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+                                </div>
+
+                                {isSecondaryOpen && (
+                                    <div className="w-full h-[calc(100%-2.5rem)] bg-slate-50">
+                                        <iframe
+                                            src={selectedGame.secondaryUrl}
+                                            className="w-full h-full"
+                                            title={selectedGame.secondaryTitle}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
