@@ -13,59 +13,38 @@ interface Workshop {
 const workshops: Workshop[] = [
     {
         id: 1,
-        title: "El motor de la vida: Deseo y Soledad",
-        duration: "15 min",
-        description: "Una charla inspiradora sobre lo que nos impulsa a seguir adelante.",
-        videoId: "jW0i9J4L11I"
+        title: "El hombre, el deseo y la palabra (TEDx)",
+        duration: "18 min",
+        description: "Charla TEDx sobre la condición humana, el dolor y la importancia de la palabra.",
+        videoId: "6Z63rwy0zlO"
     },
     {
         id: 2,
-        title: "Soltar no es voluntario",
-        duration: "18 min",
-        description: "Gabriel Rolón reflexiona sobre la melancolía y la dificultad de dejar ir el pasado.",
-        videoId: "F0pX5_nI-vQ"
+        title: "Historias de Diván: La Infidelidad",
+        duration: "35 min",
+        description: "Episodio completo de la aclamada serie basada en los casos reales de Gabriel Rolón.",
+        videoId: "VsFzYcmNVzE"
     },
     {
         id: 3,
-        title: "Miedo a la soledad",
-        duration: "20 min",
-        description: "Análisis sobre el miedo a estar solos y cómo construir una soledad fértil.",
-        videoId: "wX-yXz-z1qA"
-    },
-    {
-        id: 4,
         title: "¿Existe la felicidad?",
         duration: "25 min",
-        description: "Debate sobre la felicidad, el goce y el sentido de la vida.",
+        description: "Debate profundo sobre la felicidad, el goce y el sentido de la vida.",
         videoId: "2tX2-3eP8J0"
     },
     {
+        id: 4,
+        title: "Aprender a estar solo",
+        duration: "15 min",
+        description: "Reflexiones sobre la soledad y cómo transformarla en un espacio de crecimiento.",
+        videoId: "LqN_y5S_z5M"
+    },
+    {
         id: 5,
-        title: "Recuperar el respeto propio",
+        title: "El duelo y sus etapas",
         duration: "12 min",
-        description: "Actitudes fundamentales para fortalecer la autoestima y hacerse respetar.",
-        videoId: "Q7w4nS00iP0"
-    },
-    {
-        id: 6,
-        title: "Uno no se enamora de cualquiera",
-        duration: "14 min",
-        description: "Sobre las elecciones amorosas y cómo nuestra historia define a quién amamos.",
-        videoId: "3i6G_W3Z8y0"
-    },
-    {
-        id: 7,
-        title: "El lado B del amor",
-        duration: "22 min",
-        description: "Encuentros y desencuentros en las relaciones de pareja.",
-        videoId: "sE0iH7693nE"
-    },
-    {
-        id: 8,
-        title: "Elegir a quién cuidar",
-        duration: "16 min",
-        description: "La importancia de la reciprocidad y los límites en los vínculos afectivos.",
-        videoId: "C7d4aG1hJ4U"
+        description: "Explicación clara sobre los momentos del duelo y cómo transitar el dolor.",
+        videoId: "0k5L4jN_o2g"
     }
 ];
 
@@ -101,7 +80,7 @@ const VideoTalleres: React.FC = () => {
                         <div className="relative pt-[56.25%] bg-black">
                             <iframe
                                 className="absolute top-0 left-0 w-full h-full"
-                                src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1`}
+                                src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1&origin=${window.location.origin}&modestbranding=1&rel=0`}
                                 title={activeVideo.title}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
