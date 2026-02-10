@@ -27,10 +27,17 @@ const workshops: Workshop[] = [
     },
     {
         id: 3,
-        title: "¿Existe la felicidad?",
-        duration: "25 min",
-        description: "Debate profundo sobre la felicidad, el goce y el sentido de la vida.",
-        videoId: "2tX2-3eP8J0"
+        title: "La queja no resuelve nada",
+        duration: "10 min",
+        description: "Reflexión sobre la diferencia entre la queja y la protesta.",
+        videoId: "DR8WKSN7Okw"
+    },
+    {
+        id: 4,
+        title: "El Dolor y el Duelo",
+        duration: "15 min",
+        description: "Cómo transitar los momentos más difíciles de la vida.",
+        videoId: "SzrYGo8lnzE"
     }
 ];
 
