@@ -45,6 +45,27 @@ const workshops: Workshop[] = [
         duration: "20 min",
         description: "Reflexiones generales sobre el cuidado de nuestra salud mental en la vida diaria.",
         videoId: "b4wS9J2_7I0"
+    },
+    {
+        id: 6,
+        title: "La palabra plena",
+        duration: "18 min",
+        description: "La importancia de la palabra y cómo esta nos define y compromete.",
+        videoId: "5_Woqz5mjWk"
+    },
+    {
+        id: 7,
+        title: "Encontrar la vocación",
+        duration: "22 min",
+        description: "Cómo simbolizar la ausencia y encontrar aquello que realmente nos apasiona.",
+        videoId: "SNwLK1N0vSs"
+    },
+    {
+        id: 8,
+        title: "¿Qué me gustaría hacer a mí?",
+        duration: "15 min",
+        description: "Reflexiones sobre el deseo propio y la elección personal en la vida y el trabajo.",
+        videoId: "mED4XKYmeqL"
     }
 ];
 
