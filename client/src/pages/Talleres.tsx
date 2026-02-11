@@ -57,7 +57,7 @@ const Talleres: React.FC = () => {
                                     Tu navegador no soporta el elemento de video.
                                 </video>
                             </div>
-                            <h3 className="text-lg font-semibold text-slate-700">Taller con Chicos</h3>
+                            <h3 className="text-lg font-semibold text-slate-700">Taller Niño</h3>
                             <p className="text-slate-500 text-sm">Una muestra de nuestras dinámicas y actividades con los más jóvenes.</p>
                         </div>
                     </div>

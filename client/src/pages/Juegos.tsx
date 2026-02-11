@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Brain, Sparkles, X, ExternalLink, Minimize2, Maximize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ManifestationBox from '../components/ManifestationBox';
 
 // Game Data Types
-type ExternalGame = {
+type GameType = 'external' | 'internal';
+
+type GameItem = {
     id: string;
     title: string;
     description: string;
     icon: React.ElementType;
     color: string;
-    type: 'external';
-    url: string;
-    secondaryUrl?: string; // For the dice app
+    type: GameType;
+    url?: string;
+    secondaryUrl?: string;
     secondaryTitle?: string;
-    image?: string; // Optional cover image
+    image?: string;
 };
 
-type Game = ExternalGame;
+type Game = GameItem;
 
 const GAMES: Game[] = [
     {
@@ -42,6 +45,16 @@ const GAMES: Game[] = [
         secondaryUrl: 'https://dados3d.netlify.app/',
         secondaryTitle: 'Dados Virtuales',
         image: '/images/emociones.jpg'
+    },
+    {
+        id: 'caja-abundancia',
+        title: 'Caja de la Abundancia',
+        description: 'Recibe un mensaje del universo para tu día. Gratitud, calma y amor propio.',
+        icon: Sparkles,
+        color: 'bg-amber-500',
+        type: 'internal',
+        url: '', // Internal component
+        image: '' // We can use a gradient or icon
     }
 ];
 
@@ -53,6 +66,10 @@ const Juegos: React.FC = () => {
     const [isSecondaryOpen, setIsSecondaryOpen] = useState(true);
 
     const startGame = (game: Game) => {
+        if (game.type === 'internal') {
+            // For internal games, we might want to handle them differently or just set selectedGame
+            // and render the component in the modal area
+        }
         setSelectedGame(game);
         setIsSecondaryOpen(true);
     };
@@ -132,6 +149,16 @@ const Juegos: React.FC = () => {
         );
     }
 
+    // Special case for Manifestation Box (Internal Component)
+    if (selectedGame && selectedGame.id === 'caja-abundancia') {
+        return (
+            <ManifestationBox
+                isOpen={true}
+                onClose={closeGame}
+            />
+        );
+    }
+
     // External Game View (Iframe)
     return (
         <div className="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
@@ -160,14 +187,16 @@ const Juegos: React.FC = () => {
 
                 {/* Content Area */}
                 <div className="flex-grow bg-slate-100 relative overflow-hidden">
-                    {/* Main Game Iframe */}
-                    <iframe
-                        src={selectedGame.url}
-                        className="w-full h-full absolute inset-0"
-                        title={selectedGame.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    />
+
+                    {selectedGame.type === 'external' && selectedGame.url && (
+                        <iframe
+                            src={selectedGame.url}
+                            className="w-full h-full absolute inset-0"
+                            title={selectedGame.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    )}
 
                     {/* Secondary Floating Widget (Dice) */}
                     {selectedGame.secondaryUrl && (
