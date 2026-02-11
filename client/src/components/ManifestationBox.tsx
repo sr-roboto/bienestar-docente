@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gift, X, Sparkles, Heart, Quote } from 'lucide-react';
+import { Gift, X, Sparkles, Quote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PHRASES = [
