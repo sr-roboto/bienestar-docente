@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video, Gamepad2 } from 'lucide-react';
+import { Calendar, MessageCircle, Users, Timer, ArrowRight, Quote, Heart, Video, Gamepad2, Gift, Sparkles } from 'lucide-react';
+import ManifestationBox from '../components/ManifestationBox';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
+    const [isManifestationOpen, setIsManifestationOpen] = useState(false);
 
     const [quote, setQuote] = React.useState({
         text: "La enseñanza que deja huella no es la que se hace de cabeza a cabeza, sino de corazón a corazón.",
@@ -135,6 +137,31 @@ const Home: React.FC = () => {
                 </button>
             </div>
 
+            {/* Manifestation Box Banner */}
+            <div
+                onClick={() => setIsManifestationOpen(true)}
+                className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 p-8 text-white shadow-lg cursor-pointer group transform transition-all hover:scale-[1.01] hover:shadow-xl"
+            >
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -mr-16 -mt-16 blur-2xl pointer-events-none group-hover:bg-white/30 transition-colors"></div>
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex-1 text-center md:text-left">
+                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium mb-3">
+                            <Sparkles size={16} />
+                            <span>Mensaje del Universo</span>
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-bold mb-2">Caja de la Abundancia</h2>
+                        <p className="text-orange-50 text-lg max-w-xl">
+                            ¿Qué es lo mejor para ti hoy? Descubre tu mensaje diario para sintonizar con la gratitud y la calma.
+                        </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-orange-500 shadow-md group-hover:scale-110 transition-transform duration-300">
+                            <Gift size={32} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {features.map((feature, index) => (
@@ -176,6 +203,11 @@ const Home: React.FC = () => {
             <div className="text-center text-slate-400 text-sm mt-8">
                 Recuerda que también puedes usar el asistente de chat en la esquina inferior para ayuda rápida.
             </div>
+
+            <ManifestationBox
+                isOpen={isManifestationOpen}
+                onClose={() => setIsManifestationOpen(false)}
+            />
         </div>
     );
 };

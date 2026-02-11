@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowLeft, MessageCircle, Video } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import mayraVideo from '../assets/mayra_bienestar.mp4';
+import tallerChicosVideo from '../assets/taller_chicos.mp4';
 
 const Talleres: React.FC = () => {
     const navigate = useNavigate();
@@ -34,12 +35,31 @@ const Talleres: React.FC = () => {
                         Mira el video de presentación a continuación y contáctanos para más información.
                     </p>
 
-                    {/* Video Container */}
-                    <div className="relative aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-lg mb-10 group">
-                        <video controls className="w-full h-full object-cover">
-                            <source src={mayraVideo} type="video/mp4" />
-                            Tu navegador no soporta el elemento de video.
-                        </video>
+                    {/* Video Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        {/* Video 1: Presentación */}
+                        <div className="space-y-3">
+                            <div className="relative aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-lg group">
+                                <video controls className="w-full h-full object-cover">
+                                    <source src={mayraVideo} type="video/mp4" />
+                                    Tu navegador no soporta el elemento de video.
+                                </video>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-700">Presentación General</h3>
+                            <p className="text-slate-500 text-sm">Descubre de qué se tratan nuestros talleres y cómo pueden ayudarte.</p>
+                        </div>
+
+                        {/* Video 2: Taller con Chicos */}
+                        <div className="space-y-3">
+                            <div className="relative aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-lg group">
+                                <video controls className="w-full h-full object-cover">
+                                    <source src={tallerChicosVideo} type="video/mp4" />
+                                    Tu navegador no soporta el elemento de video.
+                                </video>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-700">Taller con Chicos</h3>
+                            <p className="text-slate-500 text-sm">Una muestra de nuestras dinámicas y actividades con los más jóvenes.</p>
+                        </div>
                     </div>
 
                     <div className="bg-slate-50 rounded-xl p-8 text-center">
