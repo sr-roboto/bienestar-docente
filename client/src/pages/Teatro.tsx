@@ -13,7 +13,7 @@ const Teatro: React.FC = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-6xl mx-auto space-y-8">
             <button
                 onClick={() => navigate('/')}
                 className="flex items-center text-slate-500 hover:text-indigo-600 transition-colors"
@@ -25,9 +25,9 @@ const Teatro: React.FC = () => {
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
                 {/* Header Section */}
                 <div className="bg-gradient-to-r from-rose-500 to-pink-600 p-8 text-white">
-                    <h1 className="text-3xl font-bold mb-2">Técnicas Teatrales para Docentes</h1>
+                    <h1 className="text-3xl font-bold mb-2">Técnicas Teatrales y Bienestar Corporal</h1>
                     <p className="text-rose-100 text-lg">
-                        Herramientas expresivas para el aula y la vida.
+                        Herramientas expresivas y de salud para el docente.
                     </p>
                 </div>
 
@@ -58,10 +58,10 @@ const Teatro: React.FC = () => {
 
                     {/* Trainers Section */}
                     <div className="text-center mb-10">
-                        <h2 className="text-2xl font-bold text-slate-800 mb-6">Con Pablo Di Genova y Marcela Gilabert</h2>
+                        <h2 className="text-2xl font-bold text-slate-800 mb-6">Nuestros Facilitadores</h2>
 
                         {/* Photos Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 max-w-3xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 mx-auto">
                             {/* Marcela */}
                             <div className="flex flex-col items-center">
                                 <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white">
@@ -72,6 +72,7 @@ const Teatro: React.FC = () => {
                                     />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800">Marcela Gilabert</h3>
+                                <p className="text-slate-500">Teatro</p>
                             </div>
 
                             {/* Pablo */}
@@ -84,6 +85,17 @@ const Teatro: React.FC = () => {
                                     />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800">Pablo Di Genova</h3>
+                                <p className="text-slate-500">Teatro</p>
+                            </div>
+
+                            {/* Miriam */}
+                            <div className="flex flex-col items-center">
+                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white bg-black flex items-center justify-center">
+                                    <span className="text-white text-xs text-center p-2">Video disponible próximamente</span>
+                                    {/* Video removed due to size limits. Waiting for YouTube link. */}
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-800">Lic. Miriam Alvarez</h3>
+                                <p className="text-slate-500">Nutrición</p>
                             </div>
                         </div>
 
