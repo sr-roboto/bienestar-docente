@@ -91,7 +91,7 @@ const Teatro: React.FC = () => {
 
                             {/* Miriam */}
                             <div className="flex flex-col items-center">
-                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white bg-black">
+                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden shadow-lg mb-4 border-4 border-white bg-black">
                                     <video
                                         src={miriamVideo}
                                         controls
