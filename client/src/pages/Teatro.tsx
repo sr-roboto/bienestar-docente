@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowLeft, MessageCircle, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import marcelaImg from '../assets/marcela.jpg';
+import pabloImg from '../assets/pablo.jpg';
 
 const Teatro: React.FC = () => {
     const navigate = useNavigate();
@@ -58,16 +60,31 @@ const Teatro: React.FC = () => {
                     <div className="text-center mb-10">
                         <h2 className="text-2xl font-bold text-slate-800 mb-6">Con Pablo Di Genova y Marcela Gilabert</h2>
 
-                        {/* Placeholder for Photo */}
-                        <div className="max-w-md mx-auto aspect-[4/3] bg-slate-200 rounded-xl flex items-center justify-center mb-6 border-2 border-dashed border-slate-300">
-                            <div className="text-center text-slate-500 p-6">
-                                <p className="font-medium">Foto de Pablo Di Genova y Marcela Gilabert</p>
-                                <p className="text-xs mt-2">(Imagen pendiente de carga)</p>
+                        {/* Photos Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 max-w-3xl mx-auto">
+                            {/* Marcela */}
+                            <div className="flex flex-col items-center">
+                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white">
+                                    <img
+                                        src={marcelaImg}
+                                        alt="Marcela Gilabert"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-800">Marcela Gilabert</h3>
                             </div>
-                            {/* 
-                                TODO: Replace the div above with the actual image once provided.
-                                Example: <img src={photoUrl} alt="Pablo y Marcela" className="w-full h-full object-cover rounded-xl" />
-                            */}
+
+                            {/* Pablo */}
+                            <div className="flex flex-col items-center">
+                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white">
+                                    <img
+                                        src={pabloImg}
+                                        alt="Pablo Di Genova"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-800">Pablo Di Genova</h3>
+                            </div>
                         </div>
 
                         <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
