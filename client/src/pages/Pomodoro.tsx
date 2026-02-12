@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Coffee, BookOpen } from 'lucide-react';
+import { Play, Pause, RotateCcw, Coffee, BookOpen, Gift, Sparkles } from 'lucide-react';
+import ManifestationBox from '../components/ManifestationBox';
 
 const Pomodoro: React.FC = () => {
     const [timeLeft, setTimeLeft] = useState(25 * 60);
     const [isActive, setIsActive] = useState(false);
     const [mode, setMode] = useState<'focus' | 'break'>('focus');
+    const [isManifestationOpen, setIsManifestationOpen] = useState(false);
 
     useEffect(() => {
         let interval: ReturnType<typeof setInterval> | null = null; // Correct type for interval
@@ -94,6 +96,33 @@ const Pomodoro: React.FC = () => {
                 </div>
             </div>
 
+
+
+            {/* Manifestation Box Banner */}
+            <div
+                onClick={() => setIsManifestationOpen(true)}
+                className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-white shadow-lg cursor-pointer group transform transition-all hover:scale-[1.01] hover:shadow-xl text-left"
+            >
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/20 rounded-full -mr-12 -mt-12 blur-2xl pointer-events-none group-hover:bg-white/30 transition-colors"></div>
+                <div className="relative z-10 flex items-center justify-between gap-4">
+                    <div>
+                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium mb-2">
+                            <Sparkles size={14} />
+                            <span>Mensaje del Universo</span>
+                        </div>
+                        <h3 className="text-xl font-bold mb-1">Caja de la Abundancia</h3>
+                        <p className="text-orange-50 text-sm max-w-md">
+                            Tómate un descanso y recibe un mensaje para sintonizar con la gratitud.
+                        </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-orange-500 shadow-md group-hover:scale-110 transition-transform duration-300">
+                            <Gift size={24} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="bg-indigo-50 border border-indigo-100 p-6 rounded-xl text-left">
                 <h3 className="font-semibold text-indigo-900 mb-2">Tips para tu Recreo:</h3>
                 <ul className="list-disc list-inside text-sm text-indigo-800 space-y-2">
@@ -103,7 +132,12 @@ const Pomodoro: React.FC = () => {
                     <li>No revises el celular, ¡deja descansar tus ojos!</li>
                 </ul>
             </div>
-        </div>
+
+            <ManifestationBox
+                isOpen={isManifestationOpen}
+                onClose={() => setIsManifestationOpen(false)}
+            />
+        </div >
     );
 };
 

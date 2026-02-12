@@ -1,7 +1,7 @@
+
 import React, { useState } from 'react';
-import { ArrowLeft, Brain, Sparkles, X, ExternalLink, Minimize2, Maximize2 } from 'lucide-react';
+import { ArrowLeft, Play, Info, RotateCcw, Volume2, VolumeX, Maximize2, Minimize2, ExternalLink, Sparkles, MessageCircle, Dice5 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import ManifestationBox from '../components/ManifestationBox';
 
 // Game Data Types
 type GameType = 'external' | 'internal';
@@ -103,7 +103,7 @@ const Juegos: React.FC = () => {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                     <div className="absolute bottom-4 left-4 text-white">
-                                        <div className={`${game.color} w-10 h-10 rounded-full flex items-center justify-center text-white mb-2 shadow-md`}>
+                                        <div className={`${game.color} w - 10 h - 10 rounded - full flex items - center justify - center text - white mb - 2 shadow - md`}>
                                             <game.icon size={20} />
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@ const Juegos: React.FC = () => {
 
                             <div className="p-6 flex flex-col flex-grow">
                                 {!game.image && (
-                                    <div className={`${game.color} w-14 h-14 rounded-full flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+                                    <div className={`${game.color} w - 14 h - 14 rounded - full flex items - center justify - center text - white mb - 4 shadow - md group - hover: scale - 110 transition - transform`}>
                                         <game.icon size={28} />
                                     </div>
                                 )}
@@ -122,9 +122,9 @@ const Juegos: React.FC = () => {
 
                                 <div className="mt-auto pt-4 border-t border-slate-50 flex justify-between items-center text-sm font-medium">
                                     <span className={`
-                                        px-2 py-1 rounded-md 
-                                        bg-slate-100 text-slate-700
-                                    `}>
+px - 2 py - 1 rounded - md
+bg - slate - 100 text - slate - 700
+    `}>
                                         Juego + Herramientas
                                     </span>
                                     <div className="text-indigo-600 group-hover:translate-x-1 transition-transform inline-flex items-center">
@@ -139,15 +139,7 @@ const Juegos: React.FC = () => {
         );
     }
 
-    // Special case for Manifestation Box (Internal Component)
-    if (selectedGame && selectedGame.id === 'caja-abundancia') {
-        return (
-            <ManifestationBox
-                isOpen={true}
-                onClose={closeGame}
-            />
-        );
-    }
+
 
     // External Game View (Iframe)
     return (
@@ -155,7 +147,7 @@ const Juegos: React.FC = () => {
             <div className="bg-white w-full h-full max-w-7xl max-h-[95vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col relative animate-in zoom-in-95 duration-200">
 
                 {/* Header */}
-                <div className={`${selectedGame.color} p-4 flex items-center justify-between text-white shadow-md z-10`}>
+                <div className={`${selectedGame.color} p - 4 flex items - center justify - between text - white shadow - md z - 10`}>
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                             <selectedGame.icon size={20} />
@@ -191,9 +183,9 @@ const Juegos: React.FC = () => {
                     {/* Secondary Floating Widget (Dice) */}
                     {selectedGame.secondaryUrl && (
                         <div className={`
-                            absolute bottom-4 right-4 bg-white rounded-xl shadow-2xl border-2 border-slate-200 overflow-hidden transition-all duration-300
+                            absolute bottom - 4 right - 4 bg - white rounded - xl shadow - 2xl border - 2 border - slate - 200 overflow - hidden transition - all duration - 300
                             ${isSecondaryOpen ? 'w-80 h-96' : 'w-48 h-12'}
-                        `}>
+`}>
                             <div
                                 className="bg-slate-800 text-white p-2 px-3 flex items-center justify-between cursor-pointer hover:bg-slate-700 transition-colors"
                                 onClick={() => setIsSecondaryOpen(!isSecondaryOpen)}
