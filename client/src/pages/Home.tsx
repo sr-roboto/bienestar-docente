@@ -111,6 +111,15 @@ const Home: React.FC = () => {
             lightColor: 'bg-red-50',
             textColor: 'text-red-600',
         },
+        {
+            title: 'Técnicas Teatrales',
+            description: 'Pablo Di Genova y Marcela Gilabert.',
+            icon: Users,
+            path: '/teatro',
+            color: 'bg-rose-500',
+            lightColor: 'bg-rose-50',
+            textColor: 'text-rose-600',
+        },
     ];
 
     const currentTime = new Date();

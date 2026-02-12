@@ -34,6 +34,7 @@ const Layout: React.FC = () => {
         { path: '/community', icon: Users, label: 'Comunidad' },
         { path: '/pomodoro', icon: Timer, label: 'Recreo' },
         { path: '/talleres', icon: Video, label: 'Talleres' },
+        { path: '/teatro', icon: Users, label: 'Teatro', color: 'text-rose-600' },
     ];
 
     // Determine chat context based on current route
