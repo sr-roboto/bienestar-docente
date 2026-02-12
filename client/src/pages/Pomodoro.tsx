@@ -3,13 +3,16 @@ import { Play, Pause, RotateCcw, Coffee, BookOpen, Gift, Sparkles } from 'lucide
 import ManifestationBox from '../components/ManifestationBox';
 
 const Pomodoro: React.FC = () => {
-    const [timeLeft, setTimeLeft] = useState(25 * 60);
+    const FOCUS_TIME = 25 * 60;
+    const BREAK_TIME = 5 * 60;
+
+    const [timeLeft, setTimeLeft] = useState(FOCUS_TIME);
     const [isActive, setIsActive] = useState(false);
     const [mode, setMode] = useState<'focus' | 'break'>('focus');
     const [isManifestationOpen, setIsManifestationOpen] = useState(false);
 
     useEffect(() => {
-        let interval: ReturnType<typeof setInterval> | null = null; // Correct type for interval
+        let interval: ReturnType<typeof setInterval> | null = null;
 
         if (isActive && timeLeft > 0) {
             interval = setInterval(() => {
@@ -29,13 +32,18 @@ const Pomodoro: React.FC = () => {
 
     const resetTimer = () => {
         setIsActive(false);
-        setTimeLeft(mode === 'focus' ? 25 * 60 : 5 * 60);
+        setTimeLeft(mode === 'focus' ? FOCUS_TIME : BREAK_TIME);
     };
 
     const setTimerMode = (newMode: 'focus' | 'break') => {
         setMode(newMode);
         setIsActive(false);
-        setTimeLeft(newMode === 'focus' ? 25 * 60 : 5 * 60);
+        // Explicitly set the time based on the new mode immediately
+        if (newMode === 'focus') {
+            setTimeLeft(FOCUS_TIME);
+        } else {
+            setTimeLeft(BREAK_TIME);
+        }
     };
 
     const formatTime = (seconds: number) => {

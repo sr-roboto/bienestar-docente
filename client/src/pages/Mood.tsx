@@ -25,9 +25,15 @@ const MoodTracker: React.FC = () => {
         setIsLoading(true);
         try {
             const data = await moodService.getHistory();
-            setHistory(data.reverse()); // Show newest first
+            if (Array.isArray(data)) {
+                setHistory(data.reverse()); // Show newest first
+            } else {
+                setHistory([]);
+                console.warn('Mood history data is not an array:', data);
+            }
         } catch (error) {
             console.error('Failed to load mood history', error);
+            // Optionally set an error state here to show to user
         } finally {
             setIsLoading(false);
         }
@@ -43,6 +49,7 @@ const MoodTracker: React.FC = () => {
             loadHistory(); // Reload history
         } catch (error) {
             console.error('Failed to save mood', error);
+            alert('No se pudo guardar el estado de ánimo. Por favor intenta de nuevo.');
         } finally {
             setIsSaving(false);
         }

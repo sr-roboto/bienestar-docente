@@ -14,6 +14,7 @@ import {
     Video
 } from 'lucide-react';
 import ChatInterface from './ChatInterface';
+import Footer from './Footer';
 
 const Layout: React.FC = () => {
     const location = useLocation();
@@ -92,6 +93,9 @@ const Layout: React.FC = () => {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-16 md:mb-0">
                 <Outlet />
             </main>
+
+            {/* Global Footer */}
+            <Footer />
 
             {/* Mobile Navigation */}
             <nav className="md:hidden fixed bottom-0 w-full bg-white border-t border-slate-200 flex justify-around py-3 px-2 z-20">

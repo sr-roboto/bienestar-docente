@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import VideoTalleres from './pages/VideoTalleres';
 import Juegos from './pages/Juegos';
 import Talleres from './pages/Talleres';
+import Teatro from './pages/Teatro';
 
 // Simple protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -50,6 +51,7 @@ function App() {
           <Route path="workshops" element={<VideoTalleres />} />
           <Route path="games" element={<Juegos />} />
           <Route path="talleres" element={<Talleres />} />
+          <Route path="teatro" element={<Teatro />} />
         </Route>
       </Routes>
     </BrowserRouter>

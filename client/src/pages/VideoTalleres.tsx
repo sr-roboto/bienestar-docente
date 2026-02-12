@@ -38,6 +38,41 @@ const workshops: Workshop[] = [
         duration: "12 min",
         description: "Charlas inspiradoras para enfrentar la adversidad.",
         videoId: "roh6Efj87oQ"
+    },
+    {
+        id: 5,
+        title: "Resiliencia: El arte de rehacerse",
+        duration: "15 min",
+        description: "Sobre la capacidad de reconstruirnos después de las crisis.",
+        videoId: "Z3_f6a-YrY8"
+    },
+    {
+        id: 6,
+        title: "El miedo como aliado",
+        duration: "12 min",
+        description: "Entendiendo nuestros miedos para seguir adelante.",
+        videoId: "Nk0tY-yirKU"
+    },
+    {
+        id: 7,
+        title: "Vínculos y Afectos",
+        duration: "18 min",
+        description: "La importancia de los lazos sanos en nuestra vida.",
+        videoId: "J4wHKdt2loA"
+    },
+    {
+        id: 8,
+        title: "La Felicidad y el Deseo",
+        duration: "14 min",
+        description: "Reflexiones sobre la búsqueda constante de felicidad.",
+        videoId: "zl6iSEC0zeE"
+    },
+    {
+        id: 9,
+        title: "Aceptar lo que no podemos cambiar",
+        duration: "11 min",
+        description: "La sabiduría de la aceptación frente a lo inevitable.",
+        videoId: "d2Gokmz0vBE"
     }
 ];
 
