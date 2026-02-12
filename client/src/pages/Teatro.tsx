@@ -3,6 +3,7 @@ import { ArrowLeft, MessageCircle, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import marcelaImg from '../assets/marcela.jpg';
 import pabloImg from '../assets/pablo.jpg';
+import miriamVideo from '../assets/miriam_alvarez.mp4';
 
 const Teatro: React.FC = () => {
     const navigate = useNavigate();
@@ -90,9 +91,12 @@ const Teatro: React.FC = () => {
 
                             {/* Miriam */}
                             <div className="flex flex-col items-center">
-                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white bg-black flex items-center justify-center">
-                                    <span className="text-white text-xs text-center p-2">Video disponible próximamente</span>
-                                    {/* Video removed due to size limits. Waiting for YouTube link. */}
+                                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white bg-black">
+                                    <video
+                                        src={miriamVideo}
+                                        controls
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800">Lic. Miriam Alvarez</h3>
                                 <p className="text-slate-500">Nutrición</p>
