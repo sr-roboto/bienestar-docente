@@ -46,16 +46,6 @@ const GAMES: Game[] = [
         secondaryTitle: 'Dados Virtuales',
         image: '/images/emociones.jpg'
     },
-    {
-        id: 'caja-abundancia',
-        title: 'Caja de la Abundancia',
-        description: 'Recibe un mensaje del universo para tu día. Gratitud, calma y amor propio.',
-        icon: Sparkles,
-        color: 'bg-amber-500',
-        type: 'internal',
-        url: '', // Internal component
-        image: '' // We can use a gradient or icon
-    }
 ];
 
 const Juegos: React.FC = () => {
