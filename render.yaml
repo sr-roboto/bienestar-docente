@@ -28,7 +28,7 @@ services:
   - type: web
     name: bienestar-client
     env: static
-    buildCommand: npm install && npm run build
+    buildCommand: npm install -g pnpm && pnpm install && pnpm run build
     staticPublishPath: dist
     rootDir: client
     routes:

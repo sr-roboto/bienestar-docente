@@ -11,12 +11,26 @@ const Home: React.FC = () => {
     });
 
     const quotes = [
-        { text: "La enseñanza que deja huella no es la que se hace de cabeza a cabeza, sino de corazón a corazón.", author: "Howard G. Hendricks" },
-        { text: "Educar la mente sin educar el corazón no es educar en absoluto.", author: "Aristóteles" },
-        { text: "El arte de enseñar es el arte de asistir al descubrimiento.", author: "Mark Van Doren" },
-        { text: "Lo que se dé a los niños, los niños darán a la sociedad.", author: "Karl A. Menninger" },
-        { text: "Un maestro afecta la eternidad; nunca sabe dónde termina su influencia.", author: "Henry Adams" },
-        { text: "La educación es el arma más poderosa que puedes usar para cambiar el mundo.", author: "Nelson Mandela" },
+        { text: "Respirar también es parte del trabajo docente.", author: "Bienestar Docente" },
+        { text: "No todo se resuelve hoy. Y está bien.", author: "Bienestar Docente" },
+        { text: "Cuidarte no te quita compromiso, te da continuidad.", author: "Bienestar Docente" },
+        { text: "Un docente en calma enseña mejor.", author: "Bienestar Docente" },
+        { text: "El descanso también educa.", author: "Bienestar Docente" },
+        { text: "Lo que sembrás hoy, florece cuando menos lo esperás.", author: "Bienestar Docente" },
+        { text: "Educar no siempre se nota… hasta que cambia una vida.", author: "Bienestar Docente" },
+        { text: "No sos solo lo que explicás, sos lo que inspirás.", author: "Bienestar Docente" },
+        { text: "Ser docente es dejar huellas invisibles.", author: "Bienestar Docente" },
+        { text: "Tu trabajo importa, incluso cuando nadie lo dice.", author: "Bienestar Docente" },
+        { text: "No estás cansado de enseñar, estás cansado de sostener.", author: "Bienestar Docente" },
+        { text: "Pedir ayuda también es un acto de valentía docente.", author: "Bienestar Docente" },
+        { text: "Seguir enseñando en contextos difíciles es un logro enorme.", author: "Bienestar Docente" },
+        { text: "No todo depende de vos, aunque hagas mucho.", author: "Bienestar Docente" },
+        { text: "Ser fuerte no es aguantar todo, es saber cuándo parar.", author: "Bienestar Docente" },
+        { text: "La educación cambia cuando el docente se siente acompañado.", author: "Bienestar Docente" },
+        { text: "Cuidar al que enseña es cuidar el futuro.", author: "Bienestar Docente" },
+        { text: "Un docente cuidado transforma aulas.", author: "Bienestar Docente" },
+        { text: "No estás solo: educar también es un trabajo colectivo.", author: "Bienestar Docente" },
+        { text: "Tu bienestar también educa.", author: "Bienestar Docente" },
     ];
 
     const changeQuote = () => {
@@ -97,6 +111,15 @@ const Home: React.FC = () => {
             lightColor: 'bg-red-50',
             textColor: 'text-red-600',
         },
+        {
+            title: 'Técnicas Teatrales',
+            description: 'Pablo Di Genova y Marcela Gilabert.',
+            icon: Users,
+            path: '/teatro',
+            color: 'bg-rose-500',
+            lightColor: 'bg-rose-50',
+            textColor: 'text-rose-600',
+        },
     ];
 
     const currentTime = new Date();
@@ -134,6 +157,8 @@ const Home: React.FC = () => {
                     Nueva Frase
                 </button>
             </div>
+
+
 
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -176,6 +201,7 @@ const Home: React.FC = () => {
             <div className="text-center text-slate-400 text-sm mt-8">
                 Recuerda que también puedes usar el asistente de chat en la esquina inferior para ayuda rápida.
             </div>
+
         </div>
     );
 };

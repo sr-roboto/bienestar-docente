@@ -1,123 +1,75 @@
+
 import React, { useState } from 'react';
-import { ArrowLeft, Brain, Sparkles, X, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Sparkles, Maximize2, Minimize2, Brain, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-// Quiz Data Types
-type Question = {
-    text: string;
-    options: string[];
-    correctIndex: number; // For "right/wrong" type quizzes, or maybe points based?
-    // Let's do a simple points system for "Conocimiento" (Knowledge) and reflection for "Autoconocimiento"
-};
+// Game Data Types
+type GameType = 'external' | 'internal';
 
-type Quiz = {
+type GameItem = {
     id: string;
     title: string;
     description: string;
     icon: React.ElementType;
     color: string;
-    questions: Question[];
+    type: GameType;
+    url?: string;
+    secondaryUrl?: string;
+    secondaryTitle?: string;
+    image?: string;
 };
 
-const QUIZZES: Quiz[] = [
+type Game = GameItem;
+
+const GAMES: Game[] = [
     {
-        id: 'emociones',
-        title: 'Cuánto Sabés de Tus Emociones',
-        description: 'Pon a prueba tu inteligencia emocional con este pequeño desafío.',
-        icon: Brain,
-        color: 'bg-rose-500',
-        questions: [
-            {
-                text: "¿Cuál es la función principal del miedo?",
-                options: ["Paralizarnos", "Protegernos de una amenaza", "Hacernos débiles", "Enojarnos"],
-                correctIndex: 1
-            },
-            {
-                text: "¿Qué significa 'validar' una emoción?",
-                options: ["Estar de acuerdo con ella", "Aceptarla sin juzgar", "Ignorarla", "Analizarla lógicamente"],
-                correctIndex: 1
-            },
-            {
-                text: "El 'burnout' se caracteriza principalmente por:",
-                options: ["Tener mucho sueño", "Agotamiento emocional, despersonalización y baja realización", "Estar aburrido", "Querer vacaciones"],
-                correctIndex: 1
-            },
-            {
-                text: "¿Cuál es una técnica efectiva de regulación emocional inmediata?",
-                options: ["Respiración profunda", "Gritar fuerte", "Comer rápido", "Mirar el celular"],
-                correctIndex: 0
-            }
-        ]
-    },
-    {
-        id: 'poder',
+        id: 'poder-personal',
         title: 'Cuánto Sabés de Tu Poder Personal',
-        description: 'Descubre herramientas para fortalecer tu autoestima y liderazgo.',
+        description: 'Juego de cartas para fomentar el diálogo y el autoconocimiento. Incluye dados virtuales.',
         icon: Sparkles,
         color: 'bg-amber-500',
-        questions: [
-            {
-                text: "¿Qué es el locus de control interno?",
-                options: ["Creer que todo es suerte", "Creer que tenemos control sobre nuestras acciones y resultados", "Controlar a los demás", "Dejar que otros decidan"],
-                correctIndex: 1
-            },
-            {
-                text: "La asertividad es:",
-                options: ["Decir siempre que sí", "Imponer mi opinión", "Expresar mis necesidades respetando las de otros", "No decir nada para evitar conflictos"],
-                correctIndex: 2
-            },
-            {
-                text: "¿Cómo se construye la autoconfianza?",
-                options: ["Con pequeños logros y cumpliendo promesas a uno mismo", "Esperando que otros nos elogien", "Siendo perfecto", "No fallando nunca"],
-                correctIndex: 0
-            },
-            {
-                text: "El autodiálogo positivo ayuda a:",
-                options: ["Engañarnos", "Reducir el estrés y mejorar el rendimiento", "Ser vanidoso", "Nada en particular"],
-                correctIndex: 1
-            }
-        ]
-    }
+        type: 'external',
+        url: 'https://elgranencuentro.netlify.app/',
+        secondaryUrl: 'https://dados3d.netlify.app/',
+        secondaryTitle: 'Dados Virtuales',
+        image: '/images/gran_encuentro.jpg'
+    },
+    {
+        id: 'emociones-game',
+        title: 'Cuánto Sabés de Tus Emociones',
+        description: 'Juego de recorrido para explorar y validar tus emociones. Incluye dados virtuales.',
+        icon: Brain,
+        color: 'bg-rose-500',
+        type: 'external',
+        url: 'https://emociones-boardgame.netlify.app',
+        secondaryUrl: 'https://dados3d.netlify.app/',
+        secondaryTitle: 'Dados Virtuales',
+        image: '/images/emociones.jpg'
+    },
 ];
 
 const Juegos: React.FC = () => {
     const navigate = useNavigate();
-    const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
-    const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
-    const [score, setScore] = useState(0);
-    const [showResults, setShowResults] = useState(false);
+    const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
-    const startQuiz = (quiz: Quiz) => {
-        setSelectedQuiz(quiz);
-        setCurrentQuestionIdx(0);
-        setScore(0);
-        setShowResults(false);
-    };
+    // State for the secondary floating window
+    const [isSecondaryOpen, setIsSecondaryOpen] = useState(true);
 
-    const handleAnswer = (optionIdx: number) => {
-        if (!selectedQuiz) return;
-
-        if (optionIdx === selectedQuiz.questions[currentQuestionIdx].correctIndex) {
-            setScore(prev => prev + 1);
+    const startGame = (game: Game) => {
+        if (game.type === 'internal') {
+            // For internal games, we might want to handle them differently or just set selectedGame
+            // and render the component in the modal area
         }
-
-        if (currentQuestionIdx < selectedQuiz.questions.length - 1) {
-            setCurrentQuestionIdx(prev => prev + 1);
-        } else {
-            setShowResults(true);
-        }
+        setSelectedGame(game);
+        setIsSecondaryOpen(true);
     };
 
-    const resetQuiz = () => {
-        if (selectedQuiz) startQuiz(selectedQuiz);
-    };
-
-    const closeQuiz = () => {
-        setSelectedQuiz(null);
+    const closeGame = () => {
+        setSelectedGame(null);
     };
 
     // Main Game Hub View
-    if (!selectedQuiz) {
+    if (!selectedGame) {
         return (
             <div className="space-y-6">
                 <button
@@ -128,25 +80,54 @@ const Juegos: React.FC = () => {
                     Volver
                 </button>
 
-                <div className="bg-gradient-to-r from-orange-400 to-rose-500 rounded-2xl p-8 text-white shadow-lg">
-                    <h1 className="text-3xl font-bold mb-2">Zona de Juegos Digitales</h1>
-                    <p className="text-orange-50 text-lg">Aprende jugando. Herramientas lúdicas para ti y tus alumnos.</p>
+                <div className="bg-gradient-to-r from-orange-400 to-rose-500 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <h1 className="text-3xl font-bold mb-2 relative z-10">Zona de Juegos Digitales</h1>
+                    <p className="text-orange-50 text-lg relative z-10">Aprende jugando. Herramientas lúdicas para ti y tus alumnos.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {QUIZZES.map((quiz) => (
+                    {GAMES.map((game) => (
                         <div
-                            key={quiz.id}
-                            onClick={() => startQuiz(quiz)}
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all cursor-pointer group"
+                            key={game.id}
+                            onClick={() => startGame(game)}
+                            className="bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all cursor-pointer group flex flex-col h-full overflow-hidden"
                         >
-                            <div className={`${quiz.color} w-14 h-14 rounded-full flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform`}>
-                                <quiz.icon size={28} />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-800 mb-2">{quiz.title}</h3>
-                            <p className="text-slate-600">{quiz.description}</p>
-                            <div className="mt-4 text-indigo-600 font-medium group-hover:translate-x-1 transition-transform inline-flex items-center">
-                                Jugar ahora <ArrowLeft className="rotate-180 ml-1" size={16} />
+                            {/* Image Header if available */}
+                            {game.image && (
+                                <div className="h-48 w-full overflow-hidden relative">
+                                    <img
+                                        src={game.image}
+                                        alt={game.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                    <div className="absolute bottom-4 left-4 text-white">
+                                        <div className={`${game.color} w-10 h-10 rounded-full flex items-center justify-center text-white mb-2 shadow-md`}>
+                                            <game.icon size={20} />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="p-6 flex flex-col flex-grow">
+                                {!game.image && (
+                                    <div className={`${game.color} w-14 h-14 rounded-full flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform`}>
+                                        <game.icon size={28} />
+                                    </div>
+                                )}
+
+                                <h3 className="text-xl font-bold text-slate-800 mb-2">{game.title}</h3>
+                                <p className="text-slate-600 mb-4 flex-grow">{game.description}</p>
+
+                                <div className="mt-auto pt-4 border-t border-slate-50 flex justify-between items-center text-sm font-medium">
+                                    <span className={`px-2 py-1 rounded-md bg-slate-100 text-slate-700`}>
+                                        Juego + Herramientas
+                                    </span>
+                                    <div className="text-indigo-600 group-hover:translate-x-1 transition-transform inline-flex items-center">
+                                        Jugar <ArrowLeft className="rotate-180 ml-1" size={16} />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -155,79 +136,73 @@ const Juegos: React.FC = () => {
         );
     }
 
-    // Active Quiz View
-    const question = selectedQuiz.questions[currentQuestionIdx];
-    const progress = ((currentQuestionIdx + (showResults ? 1 : 0)) / selectedQuiz.questions.length) * 100;
 
+
+    // External Game View (Iframe)
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
-            <button
-                onClick={closeQuiz}
-                className="flex items-center text-slate-500 hover:text-slate-800 transition-colors mb-4"
-            >
-                <X size={20} className="mr-1" />
-                Salir del juego
-            </button>
+        <div className="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+            <div className="bg-white w-full h-full max-w-7xl max-h-[95vh] rounded-2xl overflow-hidden shadow-2xl flex flex-col relative animate-in zoom-in-95 duration-200">
 
-            <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
                 {/* Header */}
-                <div className={`${selectedQuiz.color} p-6 text-white`}>
-                    <h2 className="text-2xl font-bold">{selectedQuiz.title}</h2>
-                    {!showResults && (
-                        <div className="mt-4 bg-white/20 h-2 rounded-full overflow-hidden">
-                            <div className="bg-white h-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                <div className={`${selectedGame.color} p-4 flex items-center justify-between text-white shadow-md z-10`}>
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                            <selectedGame.icon size={20} />
                         </div>
-                    )}
+                        <div>
+                            <h2 className="font-bold text-lg leading-tight">{selectedGame.title}</h2>
+                            <span className="text-xs opacity-90 flex items-center gap-1">
+                                <ExternalLink size={12} /> Aplicación externa
+                            </span>
+                        </div>
+                    </div>
+                    <button
+                        onClick={closeGame}
+                        className="p-2 hover:bg-white/20 rounded-full transition-colors"
+                    >
+                        <X size={24} />
+                    </button>
                 </div>
 
-                {/* Content */}
-                <div className="p-8">
-                    {showResults ? (
-                        <div className="text-center py-8">
-                            <div className="inline-block p-4 rounded-full bg-yellow-100 text-yellow-600 mb-4">
-                                <Sparkles size={48} />
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-800 mb-2">¡Juego Completado!</h3>
-                            <p className="text-slate-600 text-lg mb-6">
-                                Tu puntaje: <span className="font-bold text-indigo-600 text-2xl">{score}</span> / {selectedQuiz.questions.length}
-                            </p>
+                {/* Content Area */}
+                <div className="flex-grow bg-slate-100 relative overflow-hidden">
 
-                            <div className="flex justify-center gap-4">
-                                <button
-                                    onClick={closeQuiz}
-                                    className="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 transition-colors"
-                                >
-                                    Volver al Menú
-                                </button>
-                                <button
-                                    onClick={resetQuiz}
-                                    className="px-6 py-3 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-colors flex items-center"
-                                >
-                                    <RotateCcw size={18} className="mr-2" />
-                                    Jugar de nuevo
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div>
-                            <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
-                                Pregunta {currentQuestionIdx + 1} de {selectedQuiz.questions.length}
-                            </span>
-                            <h3 className="text-xl font-bold text-slate-800 mb-6 leading-relaxed">
-                                {question.text}
-                            </h3>
+                    {selectedGame.type === 'external' && selectedGame.url && (
+                        <iframe
+                            src={selectedGame.url}
+                            className="w-full h-full absolute inset-0"
+                            title={selectedGame.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    )}
 
-                            <div className="space-y-3">
-                                {question.options.map((option, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => handleAnswer(idx)}
-                                        className="w-full text-left p-4 rounded-xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50 text-slate-700 font-medium transition-all duration-200"
-                                    >
-                                        {option}
-                                    </button>
-                                ))}
+                    {/* Secondary Floating Widget (Dice) */}
+                    {selectedGame.secondaryUrl && (
+                        <div className={`
+                            absolute bottom-4 right-4 bg-white rounded-xl shadow-2xl border-2 border-slate-200 overflow-hidden transition-all duration-300
+                            ${isSecondaryOpen ? 'w-80 h-96' : 'w-48 h-12'}
+                        `}>
+                            <div
+                                className="bg-slate-800 text-white p-2 px-3 flex items-center justify-between cursor-pointer hover:bg-slate-700 transition-colors"
+                                onClick={() => setIsSecondaryOpen(!isSecondaryOpen)}
+                            >
+                                <span className="font-bold text-sm flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                                    {selectedGame.secondaryTitle || 'Herramientas'}
+                                </span>
+                                {isSecondaryOpen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
                             </div>
+
+                            {isSecondaryOpen && (
+                                <div className="w-full h-[calc(100%-2.5rem)] bg-slate-50">
+                                    <iframe
+                                        src={selectedGame.secondaryUrl}
+                                        className="w-full h-full"
+                                        title={selectedGame.secondaryTitle}
+                                    />
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
