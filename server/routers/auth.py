@@ -79,12 +79,26 @@ async def google_login():
 async def google_callback(request: Request, db: Session = Depends(get_db)):
     """Handle callback from Google."""
     try:
-        # process_login swaps the code for a token and returns the raw dictionary response
-        auth_data = await google_sso.process_login(request)
-        # openid_from_response extracts user info from that dictionary
-        user_google = await google_sso.openid_from_response(auth_data)
-        access_token = auth_data.get("access_token")
-        refresh_token = auth_data.get("refresh_token")
+        # We need the raw access_token but verify_and_process only returns user info.
+        # We'll temporarily monkeypatch openid_from_response to capture the raw token data.
+        raw_auth_data = {}
+        original_openid_from_response = google_sso.openid_from_response
+
+        async def intercepted_openid_from_response(response, session=None):
+            raw_auth_data.update(response)
+            return await original_openid_from_response(response, session)
+
+        # Apply the interceptor
+        google_sso.openid_from_response = intercepted_openid_from_response
+        
+        try:
+            user_google = await google_sso.verify_and_process(request)
+            access_token = raw_auth_data.get("access_token")
+            refresh_token = raw_auth_data.get("refresh_token")
+        finally:
+            # Restore the original method
+            google_sso.openid_from_response = original_openid_from_response
+            
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Google Auth Error: {e}")
 
