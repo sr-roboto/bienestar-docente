@@ -88,7 +88,7 @@ export const authService = {
         const res = await api.get('/users/me');
         return res.data;
     },
-    googleLoginUrl: `${BASE_URL}/auth/google`
+    googleLoginUrl: BASE_URL ? `${BASE_URL}/auth/google` : '/auth/google'
 };
 
 export const chatService = {
