@@ -79,9 +79,10 @@ async def google_login():
 async def google_callback(request: Request, db: Session = Depends(get_db)):
     """Handle callback from Google."""
     try:
-        # Use verify to get the full token dictionary
-        auth_data = await google_sso.verify(request)
-        user_google = await google_sso.process_business_logic(auth_data)
+        # process_login swaps the code for a token and returns the raw dictionary response
+        auth_data = await google_sso.process_login(request)
+        # openid_from_response extracts user info from that dictionary
+        user_google = await google_sso.openid_from_response(auth_data)
         access_token = auth_data.get("access_token")
         refresh_token = auth_data.get("refresh_token")
     except Exception as e:
