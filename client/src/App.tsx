@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
+import { authService } from './services/api';
 import Home from './pages/Home';
 
 
@@ -21,6 +22,21 @@ import Teatro from './pages/Teatro';
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('token');
   const location = useLocation();
+
+  useEffect(() => {
+    // Verify token validity with backend
+    // If invalid, the interceptor in api.ts will handle the 401 and redirect
+    const validateToken = async () => {
+      try {
+        await authService.getMe();
+      } catch (error) {
+        console.error("Token validation failed:", error);
+      }
+    };
+    if (token) {
+      validateToken();
+    }
+  }, [token]);
 
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
