@@ -91,16 +91,19 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
             email=user_google.email,
             username=user_google.email.split("@")[0],
             google_id=user_google.id,
-            avatar_url=user_google.picture
+            avatar_url=user_google.picture,
+            google_access_token=user_google.access_token,
+            google_refresh_token=user_google.refresh_token
         )
         db.add(user)
         db.commit()
         db.refresh(user)
     else:
-        if not user.google_id:
-            user.google_id = user_google.id
-        if not user.avatar_url:
-            user.avatar_url = user_google.picture
+        user.google_id = user_google.id
+        user.avatar_url = user_google.picture
+        user.google_access_token = user_google.access_token
+        if user_google.refresh_token:
+            user.google_refresh_token = user_google.refresh_token
         db.commit()
 
     access_token = create_access_token(data={"sub": user.username if user.username else user.email})

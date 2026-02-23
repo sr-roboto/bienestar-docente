@@ -24,7 +24,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
 
-  # React Frontend (Static Site) - Configured as web service with static env for Blueprint compatibility
+  # React Frontend (Static Site)
   - type: web
     name: bienestar-client
     env: static
