@@ -79,7 +79,11 @@ async def google_login():
 async def google_callback(request: Request, db: Session = Depends(get_db)):
     """Handle callback from Google."""
     try:
-        user_google = await google_sso.verify_and_process(request)
+        # Use verify to get the full token dictionary
+        auth_data = await google_sso.verify(request)
+        user_google = await google_sso.process_business_logic(auth_data)
+        access_token = auth_data.get("access_token")
+        refresh_token = auth_data.get("refresh_token")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Google Auth Error: {e}")
 
@@ -92,8 +96,8 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
             username=user_google.email.split("@")[0],
             google_id=user_google.id,
             avatar_url=user_google.picture,
-            google_access_token=user_google.access_token,
-            google_refresh_token=user_google.refresh_token
+            google_access_token=access_token,
+            google_refresh_token=refresh_token
         )
         db.add(user)
         db.commit()
@@ -101,9 +105,9 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
     else:
         user.google_id = user_google.id
         user.avatar_url = user_google.picture
-        user.google_access_token = user_google.access_token
-        if user_google.refresh_token:
-            user.google_refresh_token = user_google.refresh_token
+        user.google_access_token = access_token
+        if refresh_token:
+            user.google_refresh_token = refresh_token
         db.commit()
 
     access_token = create_access_token(data={"sub": user.username if user.username else user.email})
